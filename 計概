@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include <ctype.h>
+
+float calculateBMI(float height, float weight);
+
+int main(void) {
+    char id[5];
+    float height;
+    float weight;
+    float bmi;
+
+    while(1) {
+        printf("Please enter student ID (must be 4 characters with 1 uppercase letter, 1 lowercase letter, and 2 digits):\n");
+        scanf("%s", id);
+        
+        // Check if the ID is valid
+        int is_valid = 1;
+        int num_count = 0;
+        int uppercase_count = 0;
+        int lowercase_count = 0;
+        for (int i = 0; i < 4; i++) {
+            if (isdigit(id[i])) {
+                num_count++;
+            } else if (isupper(id[i])) {
+                uppercase_count++;
+            } else if (islower(id[i])) {
+                lowercase_count++;
+            } else {
+                is_valid = 0;
+                break;
+            }
+        }
+        if (is_valid && num_count == 2 && uppercase_count == 1 && lowercase_count == 1) {
+            break;
+        } else {
+            printf("Invalid ID, please try again.\n");
+        }
+    }
+
+    printf("Please enter height (range from 1.5m to 2m): ");
+    scanf("%f", &height);
+    printf("Please enter weight (range from 40kg to 120kg): ");
+    scanf("%f", &weight);
+    
+    bmi = calculateBMI(height, weight);
+    
+    if (bmi != 0){
+        printf("Your BMI is: %.1f\n", bmi);
+    }
+    return 0;
+}
+
+float calculateBMI(float height, float weight) {
+    float bmi;
+    float classification;
+    
+    bmi = weight / (height * height);
+    
+    if (height < 1.5) {
+        printf("you enter wrong data.\n");
+        return 0;
+    } 
+    
+    if (height > 2) {
+        printf("you enter wrong data.\n");
+        return 0;
+    } 
+    
+    if (weight < 40) {
+        printf("you enter wrong data.\n");
+        return 0;
+    } 
+    
+    bmi = weight / (height * height);
+    
+    if (weight > 120) {
+        printf("you enter wrong data.\n");
+        return 0;
+    }
+    
+    if (bmi < 18.5) {
+        printf("The BMI classification is: Underweight\n");
+    } 
+    else if (18.5 <= bmi && bmi < 24) {
+        printf("The BMI classification is: Healthy\n");
+    } 
+    else if (24 <= bmi && bmi < 27) {
+        printf("The BMI classification is: Overweight\n");
+    } 
+    else {
+        printf("The BMI classification is: Obesity\n");
+    }
+    
+    return bmi;   
+}
